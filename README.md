@@ -1,4 +1,4 @@
-# Thermostats-Manager---Programme
+# Thermostats-Manager---Program
 
 Parts of project
 ================
