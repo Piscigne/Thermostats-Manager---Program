@@ -1,0 +1,32 @@
+{
+	"version":		"0.1.0",
+	"designer":		"Serge IZOARD",
+	"time":			"2023-01",
+	"wifi":
+	{
+		"ssid":		"YouSSID",
+		"pass":		"YouPASS"
+	},
+	"net":
+	{
+		"static":	1,
+		"ip":		"192.168.123.70",
+		"mask":		"255.255.255.0",
+		"gate":		"192.168.123.1",
+		"dns1":		"192.168.123.1",
+		"dns2":		"8.8.8.8"
+	},
+	"mqtt":
+	{
+		"server":	"192.168.123.4",
+		"port":		1883,
+		"id":		"",
+		"pass":		"",
+		"path":		"Piscigne/THMS/#"
+	},
+	"ntp":
+	{
+		"server":	"pool.ntp.org",
+		"zone":		"http://worldtimeapi.org/api/ip"
+	}
+}
