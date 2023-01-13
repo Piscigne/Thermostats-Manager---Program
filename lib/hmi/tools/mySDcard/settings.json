@@ -2,6 +2,7 @@
 	"version":		"0.1.0",
 	"designer":		"Serge IZOARD",
 	"time":			"2023-01",
+	"lock":			"12345",
 	"wifi":
 	{
 		"ssid":		"YouSSID",

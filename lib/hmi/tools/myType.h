@@ -4,13 +4,6 @@
 #include <Arduino.h>
 #include "tools/myDefine.h"
 
-typedef struct tftTouched
-{
-	bool				Touched		= NO;
-	uint16_t			X;
-	uint16_t			Y;
-} TFT_TOUCHED;
-
 typedef struct thmData
 {
 	char				Label[24];
@@ -55,8 +48,10 @@ typedef struct my_Ntp
 typedef struct THm
 {
 	bool				Locked		= YES;
+	bool				Keyboard	= false;
+	char				LockPass[LOCK_CODE_LEN];
 	int8_t				Status		= STATUS_ERROR;
-	bool				Lampe		= THM_LAMP_OFF;
+	bool				LedEscalier	= THM_LAMP_OFF;
 	bool				Presence	= THM_ABSENCE;
 	bool				Redraw		= YES;
 	int8_t				WifiRssi	= WIFI_STOP;

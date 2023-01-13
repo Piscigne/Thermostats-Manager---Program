@@ -9,52 +9,54 @@
 #include "tools/myDefine.h"
 #include "tools/myWifi/myWifi.hpp"
 #include "tools/myTime/MyTime.hpp"
+#include "Tools/myMqtt/myMqtt.hpp"
 #include "tools/myBitmap/myBitmap.hpp"
+
+#define FOOT_ICO_HOME_X		8
+#define FOOT_ICO_HOME_Y		5
+#define FOOT_ICO_HOME_W		40
+
+#define FOOT_ICO_LAMP_X		208
+#define FOOT_ICO_LAMP_Y		5
+
+#define FOOT_TXT_TIME_C		122
+#define FOOT_TXT_TIME_X		50
+#define FOOT_TXT_TIME_Y		2
+#define FOOT_TXT_TIME_W		150
+#define FOOT_TXT_TIME_H		26
+#define FOOT_TXT_TIME_F		4	// Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
+
+#define FOOT_TXT_DATE_C		122
+#define FOOT_TXT_DATE_X		30
+#define FOOT_TXT_DATE_Y		28
+#define FOOT_TXT_DATE_W		170
+#define FOOT_TXT_DATE_H		15
+#define FOOT_TXT_DATE_F		1	// Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
+
+#define LOOP_FOOT			0
+#define LOOP_FOOT_TIME		1
+#define LOOP_FOOT_DATE		2
 
 class myFooter
 {
 public:
-	#define FOOT_ICO_HOME_X		8
-	#define FOOT_ICO_HOME_Y		5
-
-	#define FOOT_ICO_LAMP_X		208
-	#define FOOT_ICO_LAMP_Y		5
-
-	#define FOOT_TXT_TIME_C		122
-	#define FOOT_TXT_TIME_X		50
-	#define FOOT_TXT_TIME_Y		2
-	#define FOOT_TXT_TIME_W		150
-	#define FOOT_TXT_TIME_H		26
-	#define FOOT_TXT_TIME_F		4	// Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
-
-	#define FOOT_TXT_DATE_C		122
-	#define FOOT_TXT_DATE_X		30
-	#define FOOT_TXT_DATE_Y		28
-	#define FOOT_TXT_DATE_W		170
-	#define FOOT_TXT_DATE_H		15
-	#define FOOT_TXT_DATE_F		1	// Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
-
-	#define LOOP_FOOT_HOME		0
-	#define LOOP_FOOT_TIME		1
-	#define LOOP_FOOT_DATE		2
-	#define LOOP_FOOT_LAMP		3
-
 	myFooter(int32_t top);
 	~myFooter() {};
 	void loop();
 	void init(void);
 	void redraw(void);
+	bool isTouched(uint16_t touchX, uint16_t touchY);
+
+private:
+	void redrawIf(void);
 	void dispHome(void);
 	void dispLamp(void);
 	void dispTime(void);
 	void dispDate(void);
-	void presence(void);
-	void infoTouch(bool status);
-	bool isTouched(uint16_t touchX, uint16_t touchY);
+	void homeTouch(void);
+	void lampTouch(void);
 
 protected:
-
-private:
 	myBitmap*	pBmap;
 	ICON_BOOL	icoLamp;
 	ICON_BOOL	icoHome;

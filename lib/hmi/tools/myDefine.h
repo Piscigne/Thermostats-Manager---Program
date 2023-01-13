@@ -3,7 +3,9 @@
 
 #include <Arduino.h>	// TFT_eSPI -> https://projetsdiy.fr/ttgo-t-watch-debuter-librairie-esp32-tft_espi/
 
-#define SD_SETTING_FILE	"/settings.json	"
+#define SD_SETTING_FILE	"/settings.json"
+#define LOCK_CODE_PASS	"12345"
+#define LOCK_CODE_LEN	10
 #define MQTT_PORT		1883
 
 #define ON				true
@@ -24,7 +26,7 @@
 #define TXT_BOT_CENTER	BC_DATUM
 #define TXT_BOT_RIGHT	BR_DATUM
 
-#define THERMOSTAT_NBR	6
+#define THERMOSTAT_NBR	6	// Thermostat index
 #define THERMOSTAT1		0
 #define THERMOSTAT2		1
 #define THERMOSTAT3		2
@@ -33,7 +35,7 @@
 #define THERMOSTAT6		5
 #define THERMOSTAT_VOID	-1
 
-#define THM_TARGET_NBR	5
+#define THM_TARGET_NBR	5	// Targets index
 #define THM_TARGET_OFF	0
 #define THM_TARGET_HG	1
 #define THM_TARGET_ECO	2
@@ -52,7 +54,7 @@
 #define TOUCH_IRQ		36  // Interup (T_IRQ) of touch screen
 #define TOUCH_DEBOUNCE	250	// mS
 
-#define THM_MODE_OFF	0
+#define THM_MODE_OFF	0	// Thermostat mode values
 #define THM_MODE_HG		1
 #define THM_MODE_ECO	2
 #define THM_MODE_ON		3
@@ -71,13 +73,9 @@
 #define THM_LAMP_ON		true
 #define THM_LAMP_OFF	false
 
-#define THM_LED_ON		1
 #define THM_LED_OFF		0
-#define THM_LED_RED		1
-#define THM_LED_BLUE	2
-#define THM_LED_GREEN	3
 
-#define WIFI_0			0
+#define WIFI_0			0	// WIFI status values
 #define WIFI_1			1
 #define WIFI_2			2
 #define WIFI_3			3
@@ -86,24 +84,24 @@
 #define WIFI_STOP		6
 #define WIFI_VOID		-1
 
-#define WIFI_RSSI_NULL	0
+#define WIFI_RSSI_NULL	0	// RSSI values used to select the wifi icon
 #define WIFI_RSSI_1		-95
 #define WIFI_RSSI_2		-70
 #define WIFI_RSSI_3		-65
 #define WIFI_RSSI_4		-60
 
-#define STATUS_ERROR	0
+#define STATUS_ERROR	0	// Status values to light the LED1
 #define STATUS_NORMAL	1
 #define STATUS_INIT		2
 #define STATUS_WIFI_OK	3
 #define STATUS_MQTT_OK	4
 #define STATUS_TOUCH_OK	5
 
-#define DIO_LED_RED		4
-#define DIO_LED_BLUE	17
-#define DIO_LED_GREEN	16
-#define DIO_IO1_TFT		21
-#define DIO_IO2_LAMP	22
-#define DIO_IO3			35
+#define DIO_LED_RED		4	// LED1, on board RED
+#define DIO_LED_BLUE	17	// LED1, on board BLUE
+#define DIO_LED_GREEN	16	// LED1, on board GREEN
+#define DIO_IO1_TFT		21	// DIO to drive the Backlight
+#define DIO_IO2_LAMP	22	// DIO to drive the relais on power board
+#define DIO_IO3			35	// DIO free
 
 #endif // MY_DEFINE__H

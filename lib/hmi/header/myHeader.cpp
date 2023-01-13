@@ -12,6 +12,7 @@
 #include "resources/bitmap/header/wifi/wifiERR.h"
 
 extern TFT_eSPI* pTft;
+extern myLock*	 pLock;
 extern THM		 ThmUnit;
 
 myHeader::myHeader(int32_t top)
@@ -41,30 +42,30 @@ void myHeader::init(void)
 
 void myHeader::dispLock(void)
 {
-		pBmap->drawARRAYbutton(HEAD_ICO_LOCK_X, Top+HEAD_ICO_LOCK_Y, &icoLock, ThmUnit.Locked);
-		LockActif = ThmUnit.Locked;
+	pBmap->drawARRAYbutton(HEAD_ICO_LOCK_X, Top+HEAD_ICO_LOCK_Y, &icoLock, ThmUnit.Locked);
+	LockActif = ThmUnit.Locked;
 }
 
 void myHeader::dispExtT(void)
 {
-		char TxtBuff[HEAD_TXT_TEMP_B];
-		sprintf(TxtBuff, TempTxt, ThmUnit.TempExtern);
-		pTft->setTextDatum(TXT_TOP_CENTER);
-		pTft->setTextColor(TFT_GREEN, TFT_BLACK, true);
-		pTft->drawString(TxtBuff, HEAD_TXT_TEMP_C, Top+HEAD_TXT_TEMP_Y, HEAD_TXT_TEMP_F);
-		TempActif = ThmUnit.TempExtern;
-		dispMinMax();
+	char TxtBuff[HEAD_TXT_TEMP_B];
+	sprintf(TxtBuff, TempTxt, ThmUnit.TempExtern);
+	pTft->setTextDatum(TXT_TOP_CENTER);
+	pTft->setTextColor(TFT_GREEN, TFT_BLACK, true);
+	pTft->drawString(TxtBuff, HEAD_TXT_TEMP_C, Top+HEAD_TXT_TEMP_Y, HEAD_TXT_TEMP_F);
+	TempActif = ThmUnit.TempExtern;
+	dispMinMax();
 }
 
 void myHeader::dispMinMax(void)
 {
-		char TxtBuff[HEAD_TXT_MINMAX_B];
-		sprintf(TxtBuff, TempMinMax, ThmUnit.TempExtMin, ThmUnit.TempExtMax);
-		pTft->setTextDatum(TXT_TOP_CENTER);
-		pTft->setTextColor(TFT_DARKGREY, TFT_BLACK, true);
-		pTft->drawString(TxtBuff, HEAD_TXT_MINMAX_C, Top+HEAD_TXT_MINMAX_Y, HEAD_TXT_MINMAX_F);
-		MaxActif = ThmUnit.TempExtMax;
-		MinActif = ThmUnit.TempExtMin;
+	char TxtBuff[HEAD_TXT_MINMAX_B];
+	sprintf(TxtBuff, TempMinMax, ThmUnit.TempExtMin, ThmUnit.TempExtMax);
+	pTft->setTextDatum(TXT_TOP_CENTER);
+	pTft->setTextColor(TFT_DARKGREY, TFT_BLACK, true);
+	pTft->drawString(TxtBuff, HEAD_TXT_MINMAX_C, Top+HEAD_TXT_MINMAX_Y, HEAD_TXT_MINMAX_F);
+	MaxActif = ThmUnit.TempExtMax;
+	MinActif = ThmUnit.TempExtMin;
 }
 
 void myHeader::dispWifi(void)
@@ -75,23 +76,29 @@ void myHeader::dispWifi(void)
 
 void myHeader::redraw(void)
 {
+	pTft->fillRect(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_Y, HEAD_BACKGROUND_W, HEAD_BACKGROUND_H, TFT_BLACK);
+	dispLock();
+	dispWifi();
+	dispExtT();
+	dispMinMax();
+	pTft->drawFastHLine(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_H, HEAD_BACKGROUND_W, HEAD_SEP_LINE_C);
+}
+
+void myHeader::redrawIf(void)
+{
 	if((ThmUnit.Locked		!= LockActif |
 		ThmUnit.WifiRssi	!= RssiActif |
 		ThmUnit.TempExtern	!= TempActif |
 		ThmUnit.TempExtMin	!= MinActif) | (ThmUnit.TempExtMax != MaxActif))
-	{	
-		pTft->fillRect(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_Y, HEAD_BACKGROUND_W, HEAD_BACKGROUND_H, TFT_BLACK);
-		dispLock();
-		dispWifi();
-		dispExtT();
-		dispMinMax();
-		pTft->drawFastHLine(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_H, HEAD_BACKGROUND_W, HEAD_SEP_LINE_C);
+	{
+		redraw();
 	}
 }
 
 void myHeader::unlock(void)
 {
-	ThmUnit.Locked = !ThmUnit.Locked;
+	if(ThmUnit.Locked)	pLock->init();
+	else				ThmUnit.Locked = ON;
 }
 
 bool myHeader::isTouched(uint16_t touchX, uint16_t touchY)
@@ -103,5 +110,5 @@ bool myHeader::isTouched(uint16_t touchX, uint16_t touchY)
 
 void myHeader::loop()
 {
-	redraw();
+	if(!ThmUnit.Keyboard) redrawIf();
 }

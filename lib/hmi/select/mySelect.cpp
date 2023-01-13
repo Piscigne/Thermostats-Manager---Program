@@ -57,6 +57,7 @@ bool mySelect::isTouched(uint16_t touchX, uint16_t touchY)
 		else if(touchX < SEL_SEP_MID_2)	ThmUnit.Selected = THERMOSTAT5;
 		else							ThmUnit.Selected = THERMOSTAT6;
 	}
+Serial.printf("Select X=%i, Y=%i, THM%i\n", touchX, touchY, ThmUnit.Selected);
 	return true;
 }
 

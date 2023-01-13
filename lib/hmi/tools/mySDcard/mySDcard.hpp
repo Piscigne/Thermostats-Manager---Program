@@ -8,7 +8,6 @@
 #include <SPI.h>
 #define FS_NO_GLOBALS
 #include <SD.h>
-//#include <FS.h>
 #define SD_CS		5
 
 class mySDcard
@@ -19,9 +18,9 @@ public:
 	void init(void);
 	void getSettings(void);
 
-protected:
-
 private:
+
+protected:
 
 };
 

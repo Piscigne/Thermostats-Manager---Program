@@ -29,7 +29,6 @@ void mySDcard::getSettings(void)
 	strlcpy(ThmUnit.Net.Dns1,	 Doc[F("net")][F("dns1")],	  sizeof(ThmUnit.Net.Dns1));	Serial.printf("DNS1: %s\n", ThmUnit.Net.Dns1);
 	strlcpy(ThmUnit.Net.Dns2,	 Doc[F("net")][F("dns2")],	  sizeof(ThmUnit.Net.Dns2));	Serial.printf("DNS2: %s\n", ThmUnit.Net.Dns2);
 
-//	ThmUnit.Mqtt.Port = int(Doc[F("mqtt")][F("port")]);													Serial.printf("PORT: %s\n", ThmUnit.Mqtt.Port);
 	strlcpy(ThmUnit.Mqtt.Server, Doc[F("mqtt")][F("server")], sizeof(ThmUnit.Mqtt.Server));	Serial.printf("IP  : %s\n", ThmUnit.Mqtt.Server);
 	strlcpy(ThmUnit.Mqtt.ID,	 Doc[F("mqtt")][F("id")],	  sizeof(ThmUnit.Mqtt.ID));		Serial.printf("ID  : %s\n", ThmUnit.Mqtt.ID);
 	strlcpy(ThmUnit.Mqtt.Pass,	 Doc[F("mqtt")][F("pass")],	  sizeof(ThmUnit.Mqtt.Pass));	Serial.printf("PASS: %s\n", ThmUnit.Mqtt.Pass);

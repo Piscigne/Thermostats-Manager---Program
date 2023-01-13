@@ -5,6 +5,7 @@
 #include <TFT_eSPI.h>
 
 #include "thm/myThmModeBtn.hpp"
+#include "Tools/myMqtt/myMqtt.hpp"
 
 class myTHMmode
 {
@@ -24,12 +25,13 @@ public:
 	void init(		void);
 	void redraw(	void);
 	void updateMode(void);
-	void dispSep(	void);
 	bool isTouched(	uint16_t touchX, uint16_t touchY);
 
-protected:
-
 private:
+	void dispSep(	void);
+	void sendMqtt(	void);
+
+protected:
 	int32_t			Top;
 	bool			Select = THM_SELECT_OFF;
 

@@ -45,6 +45,9 @@ public:
 	void loop();
 	void init(		void);
 	void redraw(	void);
+
+private:
+	void redrawIf(	void);
 	void dispLabel(	void);
 	void dispTemp(	void);
 	void dispTarget(void);
@@ -52,8 +55,6 @@ public:
 	void dispState(	void);
 
 protected:
-
-private:
 	int32_t		X;
 	int32_t		Y;
 	myBitmap*	pBmap;

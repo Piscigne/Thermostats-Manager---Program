@@ -8,7 +8,8 @@ TFT_Touch*	pTouch		= new TFT_Touch(TOUCH_CS, TOUCH_CLK, TOUCH_IN, TOUCH_OUT);
 mySDcard*	pSDcard		= new mySDcard();
 myWifi*		pWifi		= new myWifi();
 myMqtt*		pMqtt		= new myMqtt();
-myTime*		MYtime		= new myTime();
+myLock*		pLock		= new myLock();
+myTime*		pTime		= new myTime();
 myDio*		pDio		= new myDio();
 myHmi*	 	pHmi		= new myHmi();
 int8_t		iLoopMain	= 0;
@@ -27,9 +28,6 @@ void initTFT()
 	pTft->begin();
 	pTft->setSwapBytes(true);
 	pTft->setRotation(TFT_ROTATE);
-#ifdef USE_DMA
-	pTft->initDMA();
-#endif
 	pTft->fillScreen(TFT_BLACK);
 	pTft->setTextColor(TFT_GREEN, TFT_BLACK);
 	pTft->println("SCREEN initialized!");
@@ -45,6 +43,7 @@ void setup()
 {
 	initCOM();
 	ThmUnit.Status = STATUS_INIT;
+	strcpy(ThmUnit.LockPass, LOCK_CODE_PASS);
 	pDio->init();
 	initTFT();
 	initTOUCH();
@@ -52,7 +51,7 @@ void setup()
 	pSDcard->getSettings();
 	pWifi->init();
 	ThmUnit.Status = STATUS_WIFI_OK;
-	MYtime->getNtpTime();
+	pTime->getNtpTime();
 	pMqtt->init();
 	delay(1000);
 	pTft->fillScreen(TFT_BLACK);

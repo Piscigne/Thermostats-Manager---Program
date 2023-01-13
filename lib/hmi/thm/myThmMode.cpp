@@ -1,6 +1,7 @@
 #include <thm/myThmMode.hpp>
 
 extern TFT_eSPI* pTft;
+extern myMqtt*	 pMqtt;
 extern THM		 ThmUnit;
 extern THM_DATA	 ThmData[THERMOSTAT_NBR];
 
@@ -27,7 +28,25 @@ void myTHMmode::updateMode(void)
 	pModeECO->setSelect( ThmData[ThmUnit.Selected].Mode == THM_MODE_ECO);
 	pModeHG->setSelect(	 ThmData[ThmUnit.Selected].Mode == THM_MODE_HG);
 	pModeOFF->setSelect( ThmData[ThmUnit.Selected].Mode == THM_MODE_OFF);
+	sendMqtt();
 	redraw();
+}
+
+void myTHMmode::sendMqtt(void)
+{
+	char Topic[32];
+	sprintf(Topic, "Piscigne/THMS/MODE/THM%i", ThmUnit.Selected+1);
+
+	const char*	TxtMode;
+	switch(ThmData[ThmUnit.Selected].Mode)
+	{
+		case THM_MODE_CONF:	TxtMode = "CONF+";	break;
+		case THM_MODE_ON:	TxtMode = "CONF";	break;
+		case THM_MODE_ECO:	TxtMode = "ECO.";	break;
+		case THM_MODE_HG:	TxtMode = "H.G.";	break;
+		default:			TxtMode = "ARRET";	break;
+	}
+	pMqtt->sendStr(Topic, TxtMode);
 }
 
 void myTHMmode::redraw(void)

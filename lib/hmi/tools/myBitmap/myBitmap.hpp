@@ -19,9 +19,9 @@ public:
 	void drawARRAYbutton(int32_t x, int32_t y, ICON_BOOL*	 img, bool   state);
 	void drawARRAYlist(	 int32_t x, int32_t y, ICON_LIST*	 img, int8_t index);
 
-protected:
-
 private:
+
+protected:
 
 };
 

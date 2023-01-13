@@ -16,15 +16,19 @@ public:
 	~myMqtt() {};
 	void loop(void);
 	void init(void);
+	void sendStr(	 const char* topic, const char* str);
+	void sendInt(	 const char* topic, int  value);
+	void sendBool(	 const char* topic, bool state);
 	void Callback(char* topic, byte* message, unsigned int length);
-	void Reconnect(  void);
-	void setTempExt( char* msg);
-	void setpresence(char* msg);
-	void setThm(	 char* msg, int thm);
-
-protected:
 
 private:
+	void setThm(	 char* msg, int thm);
+	void setLeds(	 char* msg);
+	void setTempExt( char* msg);
+	void setPresence(char* msg);
+	void Reconnect(void);
+
+protected:
 	int TopicOff;
 };
 

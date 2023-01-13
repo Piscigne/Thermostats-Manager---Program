@@ -26,16 +26,15 @@ void myMqtt::init()
 void myMqtt::setThm(char* msg, int thm)
 {
 	int Index = thm-1;
-//Serial.printf("myMQTT setThm [%i] msg [%s]\n", Index, msg);
 	deserializeJson(mqttJson, msg);
 
-	strlcpy(ThmData[Index].Label, mqttJson[F("Label")], sizeof(ThmData[Index].Label));	//Serial.printf("Label[%i] [%s] - ", Index, ThmData[Index].Label);
+	strlcpy(ThmData[Index].Label, mqttJson[F("Label")], sizeof(ThmData[Index].Label));
 	ThmData[Index].Temp	  = float(mqttJson[F("Temp")]);
 	ThmData[Index].Target = float(mqttJson[F("Target")]);
 	ThmData[Index].State  = bool( mqttJson[F("Actif")]);
 
 	char Mode[8];
-	strlcpy(Mode, mqttJson[F("Mode")], sizeof(Mode));									//Serial.printf("Mode [%s]\n", Mode);
+	strlcpy(Mode, mqttJson[F("Mode")], sizeof(Mode));
 	if(		!strcmp(Mode, "CONF"))	ThmData[Index].Mode = THM_MODE_CONF;
 	else if(!strcmp(Mode, "ON"))	ThmData[Index].Mode = THM_MODE_ON;
 	else if(!strcmp(Mode, "ECO"))	ThmData[Index].Mode = THM_MODE_ECO;
@@ -57,22 +56,44 @@ void myMqtt::setTempExt(char* msg)
 	ThmUnit.TempExtMin = float(mqttJson[F("ExtMin")]);
 }
 
-void myMqtt::setpresence(char* msg)
+void myMqtt::setPresence(char* msg)
 {
 	deserializeJson(mqttJson, msg);
 	ThmUnit.Presence  = bool(mqttJson[F("Presence")]);
 }
 
+void myMqtt::setLeds(char* msg)
+{
+	ThmUnit.LedEscalier = (msg[0] == '1') ? true : false;
+}
+
 void myMqtt::Callback(char* topic, byte* payload, unsigned int length)
 {
 	int TopicLen = strlen(topic)-TopicOff;
-	char Msg[length]; strncpy(Msg,	 (char*)payload, length);	Msg[length]		= '\0';	// Serial.printf("myMQTT Msg[%i]: %s - %s\n", TopicLen, topic, Msg);
-//Serial.printf("myMQTT topic [%S] payload [%s] length [%i] TopicLen [%i] TopivOff [%i]\n", topic, Msg, length, TopicLen, TopicOff);
-	char Topic[16];	  strncpy(Topic, topic+TopicOff, TopicLen);	Topic[TopicLen] = '\0';	// Serial.printf("myMQTT Topic[%i]: %s\n",  length, Topic);
+	char Msg[length]; strncpy(Msg,	 (char*)payload, length);	Msg[length]		= '\0';
+	char Topic[16];	  strncpy(Topic, topic+TopicOff, TopicLen);	Topic[TopicLen] = '\0';
 
-	if(!strncmp(Topic, "THM",  3))	setThm(	    Msg, (int)(Topic[3]-48));
-	if(!strncmp(Topic, "EXT",  3))	setTempExt( Msg);
-	if(!strncmp(Topic, "HOME", 4))	setpresence(Msg);
+	if(!strncmp(Topic, "THM",	   3))	setThm(	    Msg, (int)(Topic[3]-48));
+	if(!strncmp(Topic, "EXT",	   3))	setTempExt( Msg);
+	if(!strncmp(Topic, "PRESENCE", 8))	setPresence(Msg);
+	if(!strncmp(Topic, "LEDS",	   4))	setLeds(	Msg);
+}
+
+void myMqtt::sendStr(const char* topic, const char* str)
+{
+	mqttClient.publish(topic, str);
+}
+
+void myMqtt::sendInt(const char* topic, int value)
+{
+	char Value[8];
+	sprintf(Value, "%d", value);
+	mqttClient.publish(topic, Value);
+}
+
+void myMqtt::sendBool(const char* topic, bool state)
+{
+	mqttClient.publish(topic, state ? "1" : "0");
 }
 
 void myMqtt::Reconnect(void)

@@ -26,12 +26,12 @@ public:
 	void loop();
 	void init(void);
 	void redraw(void);
-	void drawSep(void);
 	bool isTouched(uint16_t touchX, uint16_t touchY);
 
-protected:
-
 private:
+	void drawSep(void);
+
+protected:
 	int32_t			Top;
 	int				iLoopSelect = THERMOSTAT1;
 	mySelectBtn*	ThmBtn[THERMOSTAT_NBR];

@@ -20,13 +20,11 @@ public:
 	const char*	getSsid(void);
 	int8_t		getRssi(void);
 
-protected:
-
 private:
+
+protected:
 	const char* SSID;
 	const char* PASS;
-//	const char* SSID = "BRICOLOU";
-//	const char* PASS = "1236987450bricolouYO";
 };
 
 #endif // MY_WIFI__HPP

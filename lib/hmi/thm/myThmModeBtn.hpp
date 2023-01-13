@@ -25,13 +25,13 @@ public:
 	void redraw(	void);
 	void setMode(	int8_t mode);
 	void setSelect(	bool select);
+
+private:
 	void dispMode(	void);
 	void dispBgnd(	void);
 	void dispSelect(void);
 
 protected:
-
-private:
 	int32_t		X;
 	int32_t		Y;
 	myBitmap*	pBmap;

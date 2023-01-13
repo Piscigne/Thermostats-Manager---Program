@@ -46,7 +46,6 @@ int8_t myWifi::getRssi()
 	else if(Rssi <= WIFI_RSSI_2)	ThmUnit.WifiRssi = WIFI_2;
 	else if(Rssi <= WIFI_RSSI_1)	ThmUnit.WifiRssi = WIFI_1;
 	else							ThmUnit.WifiRssi = WIFI_ERR;
-//	Serial.printf("%s rssi: %i - level: %i\n", getSsid(), Rssi, ThmUnit.WifiRssi);
 	return ThmUnit.WifiRssi;
 }
 

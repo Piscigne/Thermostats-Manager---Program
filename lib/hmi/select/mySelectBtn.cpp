@@ -79,24 +79,28 @@ void mySelectBtn::dispState(void)
 
 void mySelectBtn::redraw(void)
 {
+	pTft->fillRect(X+BTN_FILL_BG_X, Y+BTN_FILL_BG_Y, BTN_FILL_BG_W, BTN_FILL_BG_H, TFT_BLACK);
+	dispLabel();
+	dispTemp();
+	dispState();
+	dispTarget();
+	dispMode();
+	ThmUnit.Redraw = true;
+}
+
+void mySelectBtn::redrawIf(void)
+{
 	if( strcmp(ThmData[Index].Label, ThmActif.Label) |
 		ThmData[Index].Temp	  != ThmActif.Temp		 |
 		ThmData[Index].Target != ThmActif.Target	 |
 		ThmData[Index].Mode	  != ThmActif.Mode		 |
 		ThmData[Index].State  != ThmActif.State)
 	{
-		pTft->fillRect(X+BTN_FILL_BG_X, Y+BTN_FILL_BG_Y, BTN_FILL_BG_W, BTN_FILL_BG_H, TFT_BLACK);
-		dispLabel();
-		dispTemp();
-		dispState();
-		dispTarget();
-		dispMode();
-		ThmUnit.Redraw = true;
+		redraw();
 	}
 }
 
 void mySelectBtn::loop()
 {
-	redraw();
-
+	redrawIf();
 }

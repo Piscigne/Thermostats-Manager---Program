@@ -40,11 +40,7 @@ void myTHMmodeBtn::init()
 
 void myTHMmodeBtn::setMode(  int8_t mode)	{ Mode	  = mode;	dispMode();		}
 void myTHMmodeBtn::setSelect(bool	select) { Select = select;	dispSelect();	}
-
-void myTHMmodeBtn::redraw(void)
-{
-	dispSelect();
-}
+void myTHMmodeBtn::redraw(	 void)			{ dispSelect();						}
 
 void myTHMmodeBtn::dispSelect(void)
 {

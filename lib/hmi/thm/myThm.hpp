@@ -55,17 +55,19 @@ public:
 	void loop();
 	void init(		void);
 	void redraw(	void);
+	bool isTouched( uint16_t touchX, uint16_t touchY);
+
+private:
+	void redrawIf(	void);
 	void dispLabel(	void);
 	void dispTemp(	void);
 	void dispTarget(void);
 	void dispMode(	void);
+	void dispModeIf(void);
 	void dispState(	void);
 	void setActif(	void);
-	bool isTouched( uint16_t touchX, uint16_t touchY);
 
 protected:
-
-private:
 	int32_t		Top;
 	myBitmap*	pBmap;
 	myTHMmode*	pMode;

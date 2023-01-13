@@ -13,14 +13,14 @@ public:
 	~myDio() {};
 	void loop(void);
 	void init(void);
+	void updateStatus(void);
 	void setDisp(bool state);
 	void setLamp(bool state);
 	void setLeds(int8_t red, int8_t green, int8_t blue);
-	void updateStatus(void);
-
-protected:
 
 private:
+
+protected:
 	int8_t StatusActif = STATUS_ERROR;
 };
 

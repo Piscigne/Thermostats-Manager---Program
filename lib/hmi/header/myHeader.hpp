@@ -6,11 +6,9 @@
 
 #include "tools/myType.h"
 #include "tools/myDefine.h"
+#include "tools/myLock/myLock.hpp"
 #include "tools/myBitmap/myBitmap.hpp"
 
-class myHeader
-{
-public:
 	#define HEAD_SEP_LINE_C		0x3186
 	#define HEAD_BACKGROUND_X	0
 	#define HEAD_BACKGROUND_Y	0
@@ -40,26 +38,28 @@ public:
 	#define HEAD_TXT_MINMAX_F	1	// Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
 	#define HEAD_TXT_MINMAX_B	32	// text buffer size
 
+class myHeader
+{
+public:
 	myHeader(int32_t top);
 	~myHeader() {};
 	void loop();
 	void init(void);
+	void redraw(void);
+	bool isTouched(uint16_t touchX, uint16_t touchY);
+
+private:
+	void redrawIf(void);
 	void dispLock(void);
 	void dispExtT(void);
 	void dispMinMax(void);
 	void dispWifi(void);
-	void redraw(void);
 	void unlock(void);
-	bool isTouched(uint16_t touchX, uint16_t touchY);
 
 protected:
-
-private:
 	myBitmap*	pBmap;
-
 	ICON_BOOL	icoLock;
 	ICON_LIST	icoWifi;
-
 	int32_t		Top;
 	bool		LockActif	= THM_UNLOCKED;
 	int8_t		RssiActif	= WIFI_VOID;

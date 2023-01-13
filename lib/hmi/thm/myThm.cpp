@@ -30,18 +30,24 @@ void myThm::init()
 
 void myThm::redraw(void)
 {
+	pTft->fillRect(0, Top, 240, THM_MODE_SWITCH, TFT_BLACK);
+	dispLabel();
+	dispTemp();
+	dispTarget();
+	dispState();
+	dispMode();
+}
+
+void myThm::redrawIf(void)
+{
 	if( strcmp(ThmData[ThmUnit.Selected].Label, ThmActif.Label)	|
 		ThmData[ThmUnit.Selected].Temp	 != ThmActif.Temp		|
 		ThmData[ThmUnit.Selected].Target != ThmActif.Target		|
 		ThmData[ThmUnit.Selected].State	 != ThmActif.State)
 	{
-		pTft->fillRect(0, Top, 240, THM_MODE_SWITCH, TFT_BLACK);
-		dispLabel();
-		dispTemp();
-		dispTarget();
-		dispState();
+		redraw();
 	}
-	dispMode();
+	dispModeIf();
 }
 
 void myThm::dispLabel(void)
@@ -82,22 +88,27 @@ void myThm::dispState(void)
 
 void myThm::dispMode(void)
 {
+	pMode->updateMode();
+	const char*	TxtMode;
+	switch(ThmData[ThmUnit.Selected].Mode)
+	{
+		case THM_MODE_CONF:	TxtMode = "CONF+";	break;
+		case THM_MODE_ON:	TxtMode = "CONF";	break;
+		case THM_MODE_ECO:	TxtMode = "ECO.";	break;
+		case THM_MODE_HG:	TxtMode = "H.G.";	break;
+		default:			TxtMode = "ARRET";	break;
+	}
+	pTft->setTextDatum(TXT_TOP_CENTER);
+	pTft->setTextColor(TFT_LIGHTGREY, TFT_BLACK, true);
+	pTft->drawString(TxtMode, THM_TXT_MODE_C, Top+THM_TXT_MODE_Y, THM_TXT_MODE_F);
+	ThmActif.Mode = ThmData[ThmUnit.Selected].Mode;
+}
+
+void myThm::dispModeIf(void)
+{
 	if(ThmData[ThmUnit.Selected].Mode != ThmActif.Mode)
 	{
-		pMode->updateMode();
-		const char*	TxtMode;
-		switch(ThmData[ThmUnit.Selected].Mode)
-		{
-			case THM_MODE_CONF:	TxtMode = "CONF+";	break;
-			case THM_MODE_ON:	TxtMode = "CONF";	break;
-			case THM_MODE_ECO:	TxtMode = "ECO.";	break;
-			case THM_MODE_HG:	TxtMode = "H.G.";	break;
-			default:			TxtMode = "ARRET";	break;
-		}
-		pTft->setTextDatum(TXT_TOP_CENTER);
-		pTft->setTextColor(TFT_LIGHTGREY, TFT_BLACK, true);
-		pTft->drawString(TxtMode, THM_TXT_MODE_C, Top+THM_TXT_MODE_Y, THM_TXT_MODE_F);
-		ThmActif.Mode = ThmData[ThmUnit.Selected].Mode;
+		dispMode();
 	}
 }
 
@@ -109,6 +120,8 @@ void myThm::setActif(void)
 	ThmActif.State	= ThmData[ThmUnit.Selected].State;
 	ThmActif.Target	= ThmData[ThmUnit.Selected].Target;
 	ThmSelected		= ThmUnit.Selected;
+
+	redraw();
 }
 
 bool myThm::isTouched(uint16_t touchX, uint16_t touchY)
@@ -121,5 +134,5 @@ bool myThm::isTouched(uint16_t touchX, uint16_t touchY)
 void myThm::loop()
 {
 	if(ThmUnit.Selected != ThmSelected) setActif();
-	redraw();
+	redrawIf();
 }

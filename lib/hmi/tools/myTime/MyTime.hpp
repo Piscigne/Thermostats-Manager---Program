@@ -10,8 +10,8 @@
 class myTime
 {
 public:
-	#define TXT_TIME_BUFFER	16	// text buffer size
-	#define TXT_DATE_BUFFER	32	// text buffer size
+	#define TXT_TIME_BUFFER	16
+	#define TXT_DATE_BUFFER	32
 
 	myTime()  {};
 	~myTime() {};
@@ -20,9 +20,9 @@ public:
 	const char*	getDate(void);
 	const char*	getTime(void);
 
-protected:
-
 private:
+
+protected:
 	const char*	TimeTxt	= "%H : %M : %S";
 	const char*	DateTxt	= "%s %i %s %i";
 };

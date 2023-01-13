@@ -10,6 +10,7 @@
 #include "tools/myWifi/myWifi.hpp"
 #include "Tools/myMqtt/myMqtt.hpp"
 #include "tools/myTime/MyTime.hpp"
+#include "tools/myLock/myLock.hpp"
 #include "tools/myDio/myDio.hpp"
 #include "tools/myDefine.h"
 #include "myHmi.hpp"

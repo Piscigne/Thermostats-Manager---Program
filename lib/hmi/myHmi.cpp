@@ -2,11 +2,10 @@
 
 extern TFT_eSPI*	pTft;
 extern TFT_Touch*	pTouch;
+extern myLock*		pLock;
+extern THM			ThmUnit;
 
-extern bool			Locked;	
 extern int8_t		Wifi;
-
-//myPng* pPng = new myPng();
 
 myHmi::myHmi()
 {
@@ -25,8 +24,6 @@ void myHmi::init(void)
 	pThm->init();
 	pThms->init();
 	pFoot->init();
-
-//	Login.initialize();
 }
 
 void myHmi::redraw(void)
@@ -47,11 +44,17 @@ void myHmi::isTouched()
 		TouchX = pTouch->X();
 		TouchY = pTouch->Y();
 		bool Status = false;
-		if(		TouchY < TOP_THM)	Status = pHead->isTouched(TouchX, TouchY);
-		else if(TouchY < TOP_THMS)	Status = pThm->isTouched( TouchX, TouchY-TOP_THM);
-		else if(TouchY < TOP_FOOT)	Status = pThms->isTouched(TouchX, TouchY-TOP_THMS);
-		else						Status = pFoot->isTouched(TouchX, TouchY-TOP_FOOT);
-		pFoot->infoTouch(Status);
+		if(!ThmUnit.Keyboard)
+		{
+			if(		TouchY < TOP_THM)	Status = pHead->isTouched(TouchX, TouchY);
+			else if(TouchY < TOP_THMS)	Status = pThm->isTouched( TouchX, TouchY-TOP_THM);
+			else if(TouchY < TOP_FOOT)	Status = pThms->isTouched(TouchX, TouchY-TOP_THMS);
+			else						Status = pFoot->isTouched(TouchX, TouchY-TOP_FOOT);
+		}
+		else
+		{
+			if((TouchY > LOCK_KEY_TOP) & (TouchY < LOCK_KEY_BOTTOM)) Status = pLock->isTouched(TouchX, TouchY);
+		}
 		Serial.printf("X = %i, Y = %i, Clicked: %s\n", TouchX, TouchY, Status ? "ON" : "OFF");
 		delay(TOUCH_DEBOUNCE);
 	}
@@ -59,13 +62,18 @@ void myHmi::isTouched()
 
 void myHmi::loop()
 {
-	switch(iLoopHmi++)
+	if(!ThmUnit.Keyboard)
 	{
-		case LOOP_HMI_TOUCH:	isTouched();	break;
-		case LOOP_HMI_HEADER:	pHead->loop();	break;
-		case LOOP_HMI_THM:		pThm->loop();	break;
-		case LOOP_HMI_SELECT:	pThms->loop();	break;
-		case LOOP_HMI_FOOTER:	pFoot->loop();	break;
-		default:				iLoopHmi = 0;
+		switch(iLoopHmi++)
+		{
+			case LOOP_HMI_TOUCH:	isTouched();	break;
+			case LOOP_HMI_HEADER:	pHead->loop();	break;
+			case LOOP_HMI_THM:		pThm->loop();	break;
+			case LOOP_HMI_SELECT:	pThms->loop();	break;
+			case LOOP_HMI_FOOTER:	pFoot->loop();	break;
+			default:				iLoopHmi = 0;
+		}
 	}
+	else	isTouched();
+	if(ThmUnit.Redraw) { redraw(); ThmUnit.Redraw = NO; }
 }
