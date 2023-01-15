@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
-#include "tools/myType.h"
-#include "tools/myDefine.h"
+#include "tools/myType.hpp"
+#include "tools/myDefine.hpp"
 #include "tools/myDio/myDio.hpp"
 
 class myWifi

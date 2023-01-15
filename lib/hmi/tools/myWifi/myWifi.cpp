@@ -11,7 +11,7 @@ void myWifi::init()
 {
 	if(ThmUnit.Net.Static)
 	{
-		IPAddress IP;	IP.fromString(ThmUnit.Net.Adress);
+		IPAddress IP;	IP.fromString(  ThmUnit.Net.Address);
 		IPAddress MASK;	MASK.fromString(ThmUnit.Net.Mask);
 		IPAddress GATE;	GATE.fromString(ThmUnit.Net.Gateway);
 		IPAddress DNS1;	DNS1.fromString(ThmUnit.Net.Dns1);
@@ -39,21 +39,22 @@ const char* myWifi::getSsid()
 int8_t myWifi::getRssi()
 {
 	int Rssi = WiFi.RSSI();
-	if(		Rssi == WIFI_RSSI_NULL)	ThmUnit.WifiRssi = WIFI_STOP;
-	else if(Rssi <= WIFI_RSSI_NULL)	ThmUnit.WifiRssi = WIFI_4;
-	else if(Rssi <= WIFI_RSSI_4)	ThmUnit.WifiRssi = WIFI_4;
-	else if(Rssi <= WIFI_RSSI_3)	ThmUnit.WifiRssi = WIFI_3;
-	else if(Rssi <= WIFI_RSSI_2)	ThmUnit.WifiRssi = WIFI_2;
-	else if(Rssi <= WIFI_RSSI_1)	ThmUnit.WifiRssi = WIFI_1;
-	else							ThmUnit.WifiRssi = WIFI_ERR;
-	return ThmUnit.WifiRssi;
+	if(		Rssi == WIFI_RSSI_NULL)	ThmUnit.Wifi.State = WIFI_STATE_STOP;
+	else if(Rssi <= WIFI_RSSI_NULL)	ThmUnit.Wifi.State = WIFI_RSSI4;
+	else if(Rssi <= WIFI_RSSI_4)	ThmUnit.Wifi.State = WIFI_RSSI4;
+	else if(Rssi <= WIFI_RSSI_3)	ThmUnit.Wifi.State = WIFI_RSSI3;
+	else if(Rssi <= WIFI_RSSI_2)	ThmUnit.Wifi.State = WIFI_RSSI2;
+	else if(Rssi <= WIFI_RSSI_1)	ThmUnit.Wifi.State = WIFI_RSSI1;
+	else if(Rssi <= WIFI_RSSI_0)	ThmUnit.Wifi.State = WIFI_RSSI0;
+	else							ThmUnit.Wifi.State = WIFI_STATE_ERR;
+	return ThmUnit.Wifi.Rssi;
 }
 
 void myWifi::Reconnect(void)
 {
 	while(WiFi.status() != WL_CONNECTED)
 	{
-		ThmUnit.Status = STATUS_ERROR;
+		ThmUnit.Status = STATUS_ERR;
 		Serial.print("WIFI connection... ");
 		if(WiFi.reconnect())
 		{

@@ -1,32 +1,40 @@
+/***********************************************************************************************************************
+ ESP32-WROOM - THERMOSTATS
+ FILE           : myTime.cpp
+ REVISION       : 1.0a
+
+ FIRST ISSUE    : January 2023
+ CREATED BY		: S.Izoard
+***********************************************************************************************************************/
 #include "tools/myTime/MyTime.hpp"
 
-extern THM	  ThmUnit;
+extern THM	  ThmUnit;																//!< Pointer to the UNIT data structure
 
 const char* myDay[]	  = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 const char* myMonth[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
 
-char TimeBuff[TXT_TIME_BUFFER];
-char DateBuff[TXT_DATE_BUFFER];
+char TimeBuff[TXT_TIME_BUFFER];														//!< Buffer to store the formated string TIME
+char DateBuff[TXT_DATE_BUFFER];														//!< Buffer to store the formated string TIME
 
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getNtpTime(void)
+ * \brief	Time from NTP
+ * \note	Set the TIME from an NTP server
+ * \param	void
+ * \return	void
+ */
 void myTime::getNtpTime(void)
 {
 	configTime(3600, 3600, ThmUnit.Ntp.Server);
 }
 
-void myTime::setDateTime(void)
-{
-	struct tm tm;
-	tm.tm_year	= 2023-1900;
-	tm.tm_mon	= 0;
-	tm.tm_mday	= 7;
-	tm.tm_hour	= 14;
-	tm.tm_min	= 8;
-	tm.tm_sec	= 30;
-	time_t t	= mktime(&tm);
-	struct timeval now = { .tv_sec = t };
-	settimeofday(&now, NULL);
-}
-
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getTime(void)
+ * \brief	Get TIME
+ * \note	Get the TIME in formated string
+ * \param	void
+ * \return	void
+ */
 const char* myTime::getTime(void)
 {
 	struct tm tmTime;
@@ -35,6 +43,13 @@ const char* myTime::getTime(void)
 	return TimeBuff;
 }
 
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getDate(void)
+ * \brief	Get DATE
+ * \note	Get the DATE in formated string
+ * \param	void
+ * \return	void
+ */
 const char* myTime::getDate(void)
 {
 	struct tm tmDate;

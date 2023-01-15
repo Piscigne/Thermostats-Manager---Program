@@ -1,3 +1,11 @@
+/***********************************************************************************************************************
+ ESP32-WROOM - THERMOSTATS
+ FILE           : myBitmap.hpp
+ REVISION       : 1.0a
+
+ FIRST ISSUE    : January 2023
+ CREATED BY		: S.Izoard
+***********************************************************************************************************************/
 #ifndef MY_BITMAP__HPP
 #define MY_BITMAP__HPP
 
@@ -7,8 +15,8 @@
 #include <Print.h>
 #include <SPI.h>
 
-#include "tools/myType.h"
-#include "tools/myDefine.h"
+#include "tools/myType.hpp"
+#include "tools/myDefine.hpp"
 
 class myBitmap
 {

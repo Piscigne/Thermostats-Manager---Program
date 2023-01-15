@@ -1,10 +1,19 @@
+/***********************************************************************************************************************
+ ESP32-WROOM - THERMOSTATS
+ FILE           : myDio.hpp
+ REVISION       : 1.0a
+
+ FIRST ISSUE    : January 2023
+ CREATED BY		: S.Izoard
+***********************************************************************************************************************/
 #ifndef MY_DIO__HPP
 #define MY_DIO__HPP
 
 #include <Arduino.h>
 
-#include "tools/myType.h"
-#include "tools/myDefine.h"
+#include "tools/myType.hpp"
+#include "tools/myEnum.hpp"
+#include "tools/myDefine.hpp"
 
 class myDio
 {
@@ -16,12 +25,12 @@ public:
 	void updateStatus(void);
 	void setDisp(bool state);
 	void setLamp(bool state);
-	void setLeds(int8_t red, int8_t green, int8_t blue);
+	void setLeds(bool red, bool green, bool blue);
 
 private:
 
 protected:
-	int8_t StatusActif = STATUS_ERROR;
+	THM_STATUS StatusActif = STATUS_ERR;								//!< Memory of THERMOSTAT Status
 };
 
 #endif // MY_DIO__HPP

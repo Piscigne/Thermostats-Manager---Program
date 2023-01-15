@@ -1,4 +1,4 @@
-#include "tools/myType.h"
+#include "tools/myType.hpp"
 
 static const uint16_t image_data_bgBtnOFF[64] PROGMEM = {
     0xdedb, 0xd6ba, 

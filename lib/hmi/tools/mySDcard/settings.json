@@ -1,8 +1,10 @@
 {
 	"version":		"0.1.0",
 	"designer":		"Serge IZOARD",
-	"time":			"2023-01",
+	"date":			"2023-01",
+	"rebootAt":		"00:00:00",
 	"lock":			"12345",
+	"presence":		1,
 	"wifi":
 	{
 		"ssid":		"YouSSID",
