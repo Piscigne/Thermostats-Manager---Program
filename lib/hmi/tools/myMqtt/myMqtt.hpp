@@ -17,6 +17,7 @@
 #include "tools/myType.hpp"
 #include "tools/myEnum.hpp"
 #include "tools/myDefine.hpp"
+#include "tools/myDio/myDio.hpp"
 
 class myMqtt
 {

@@ -9,6 +9,7 @@
 #include "Tools/myMqtt/myMqtt.hpp"
 
 extern myMqtt*	pMqtt;																	//!< Pointer to the MQTT class
+extern myDio*	pDio;																	//!< Pointer to the DIO class
 extern THM		ThmUnit;																//!< Pointer to the UNIT data structure
 extern THM_DATA	ThmData[THM_NBR];														//!< Pointer to the THERMOSTATS data array
 
@@ -192,14 +193,16 @@ void myMqtt::Reconnect(void)
 {
 	while(!mqttClient.connected())
 	{
+		ThmUnit.Status = STATUS_ERR; pDio->updateStatus();
 		Serial.print("MQTT connection... ");
 		if(mqttClient.connect("ThermostatsClientID"))
 		{
+			ThmUnit.Status = STATUS_MQTT_OK; pDio->updateStatus();
 			Serial.println("connected");
 			Serial.printf("MQTT suscribe: %s\n", ThmUnit.Mqtt.Path);
 			mqttClient.subscribe(ThmUnit.Mqtt.Path);
 			mqttClient.publish("Piscigne/THMS/INFO", "THERMOSTATS connected to MQTT");
-			ThmUnit.Status = STATUS_OK;
+			ThmUnit.Status = STATUS_OK; pDio->updateStatus();
 		}
 		else
 		{
@@ -213,7 +216,7 @@ void myMqtt::Reconnect(void)
  * \fn		void loop()
  * \brief	LOOP function
  * \note	Loopback function used for pulling the MQTT connexion state, plus refresh the MQTT background function
- * \param	
+ * \param	void
  * \return	void
  */
 void myMqtt::loop(void)

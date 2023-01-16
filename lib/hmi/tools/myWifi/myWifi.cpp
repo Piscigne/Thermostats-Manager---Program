@@ -1,12 +1,23 @@
+/***********************************************************************************************************************
+ ESP32-WROOM - THERMOSTATS
+ FILE           : myWifi.cpp
+ REVISION       : 1.0a
+
+ FIRST ISSUE    : January 2023
+ CREATED BY		: S.Izoard
+***********************************************************************************************************************/
 #include "tools/myWifi/myWifi.hpp"
 
-extern THM	  ThmUnit;
-extern myDio* pDio;
+extern myDio* pDio;																	//!< Pointer to the DIO class
+extern THM	  ThmUnit;																//!< Pointer to the UNIT data structure
 
-myWifi::myWifi()
-{
-}
-
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void init(void)
+ * \brief	INIT the WIFI class
+ * \note	Initialize the WIFI connection (static or atribued IP)
+ * \param	void
+ * \return	void
+ */
 void myWifi::init()
 {
 	if(ThmUnit.Net.Static)
@@ -22,21 +33,41 @@ void myWifi::init()
 	Serial.printf("\nConnecting to %s (%s)\n", ThmUnit.Wifi.Ssid, ThmUnit.Wifi.Pass);
 	while(WiFi.status() != WL_CONNECTED) { Serial.print("."); delay(100); } Serial.println("");
 	Serial.printf("WIFI Connected to %s IP: %s\n", getSsid(), getIp());
-
 	ThmUnit.Status = STATUS_WIFI_OK; pDio->updateStatus();
 }
 
-const char* myWifi::getIp()
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getIp(void)
+ * \brief	Get IP
+ * \note	Get the IP address
+ * \param	void
+ * \return	const char*
+ */
+const char* myWifi::getIp(void)
 {
 	return WiFi.localIP().toString().c_str();
 }
 
-const char* myWifi::getSsid()
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getSsid(void)
+ * \brief	Get SSID
+ * \note	Get the SSID
+ * \param	void
+ * \return	const char*
+ */
+const char* myWifi::getSsid(void)
 {
 	return ThmUnit.Wifi.Ssid;
 }
 
-int8_t myWifi::getRssi()
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void getRssi(void)
+ * \brief	Get RSSI
+ * \note	Get the RRSI and define the communication state
+ * \param	void
+ * \return	int8_t
+ */
+int8_t myWifi::getRssi(void)
 {
 	int Rssi = WiFi.RSSI();
 	if(		Rssi == WIFI_RSSI_NULL)	ThmUnit.Wifi.State = WIFI_STATE_STOP;
@@ -50,6 +81,13 @@ int8_t myWifi::getRssi()
 	return ThmUnit.Wifi.Rssi;
 }
 
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void Reconnect(void)
+ * \brief	RECONNECT WIFI
+ * \note	Check WIFI connection and reconnect they if needed
+ * \param	void
+ * \return	void
+ */
 void myWifi::Reconnect(void)
 {
 	while(WiFi.status() != WL_CONNECTED)
@@ -69,6 +107,13 @@ void myWifi::Reconnect(void)
 	}
 }
 
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void loop()
+ * \brief	LOOP function
+ * \note	Loopback function used for pulling the WIFI connexion state
+ * \param	void
+ * \return	void
+ */
 void myWifi::loop(void)
 {
 	Reconnect();

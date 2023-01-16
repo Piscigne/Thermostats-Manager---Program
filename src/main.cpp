@@ -91,7 +91,7 @@ void setup()
 	ThmUnit.Selected = THM_1;
 	Serial.println("System initializations done!");
 	pHmi->init();
-	ThmUnit.Status = THM_STATUS::STATUS_OK;
+	ThmUnit.Status = STATUS_OK;
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------

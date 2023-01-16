@@ -25,7 +25,7 @@ public:
 	void updateStatus(void);
 	void setDisp(bool state);
 	void setLamp(bool state);
-	void setLeds(bool red, bool green, bool blue);
+	void setLeds(int8_t red, int8_t green, int8_t blue);
 
 private:
 

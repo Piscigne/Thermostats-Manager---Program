@@ -54,14 +54,17 @@ void myDio::setLamp(bool state)
  * \fn		void setLeds(int8_t red, int8_t green, int8_t blue)
  * \brief	LED1 RVB control
  * \note	Controle the on board RVB LED1
- * \param	[in] red	as bool	- State of LED Lamp
+ * \param	[in] red	as int8_t	- State of LED RED
+ * \param	[in] blue	as int8_t	- State of LED BLUE
+ * \param	[in] green	as int8_t	- State of LED GREEN
  * \return	void
  */
-void myDio::setLeds(bool red, bool green, bool blue)
+void myDio::setLeds(int8_t red, int8_t green, int8_t blue)
 {
-	digitalWrite(DIO_LED_RED,	 red);
-	digitalWrite(DIO_LED_BLUE,	 blue);
-	digitalWrite(DIO_LED_GREEN,	 green);
+//Serial.printf("Red:%i, Green:%i, Blue:%i\n", red, green, blue);
+	digitalWrite(DIO_LED_RED,	 !red);
+	digitalWrite(DIO_LED_BLUE,	 !blue);
+	digitalWrite(DIO_LED_GREEN,	 !green);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
@@ -75,6 +78,7 @@ void myDio::updateStatus(void)
 {
 	if(ThmUnit.Status != StatusActif)
 	{
+//Serial.printf("Status:%i, Actif:%i - ", ThmUnit.Status, StatusActif);
 		switch(ThmUnit.Status)
 		{	//								Red	  Green	Blue
 			case STATUS_INIT:		setLeds(LOW,  HIGH, HIGH);	break;	// Yellow

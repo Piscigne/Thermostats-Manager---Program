@@ -1,3 +1,11 @@
+/***********************************************************************************************************************
+ ESP32-WROOM - THERMOSTATS
+ FILE           : myWifi.hpp
+ REVISION       : 1.0a
+
+ FIRST ISSUE    : January 2023
+ CREATED BY		: S.Izoard
+***********************************************************************************************************************/
 #ifndef MY_WIFI__HPP
 #define MY_WIFI__HPP
 
@@ -11,7 +19,7 @@
 class myWifi
 {
 public:
-	myWifi();
+	myWifi()  {};
 	~myWifi() {};
 	void loop(void);
 	void init(void);
