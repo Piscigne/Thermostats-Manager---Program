@@ -33,6 +33,7 @@ public:
 
 private:
 	void setThm(	 char* msg, int thm);
+	void setEdf(	 char* msg);
 	void setLeds(	 char* msg);
 	void setTempExt( char* msg);
 	void setPresence(char* msg);

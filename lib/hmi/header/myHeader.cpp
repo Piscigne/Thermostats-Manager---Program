@@ -136,7 +136,8 @@ void myHeader::redraw(void)
 	dispWifi();
 	dispExtT();
 	dispMinMax();
-	pTft->drawFastHLine(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_H, HEAD_BACKGROUND_W, HEAD_SEP_LINE_C);
+//	pTft->drawFastHLine(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_H, HEAD_BACKGROUND_W, HEAD_SEP_LINE_C);
+	pTft->drawFastHLine(HEAD_BACKGROUND_X, Top+HEAD_BACKGROUND_H, HEAD_BACKGROUND_W, ThmUnit.EdfECOMode ? TFT_DARKGREEN : TFT_BROWN);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------

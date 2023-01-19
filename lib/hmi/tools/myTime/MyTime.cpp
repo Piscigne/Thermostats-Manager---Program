@@ -39,7 +39,12 @@ const char* myTime::getTime(void)
 {
 	struct tm tmTime;
 	if(!getLocalTime(&tmTime)) Serial.println("Could not obtain time info");
+	strftime(TimeBuff, TXT_TIME_BUFFER, BootTxt, &tmTime);
+	rebootAt(TimeBuff);
 	strftime(TimeBuff, TXT_TIME_BUFFER, TimeTxt, &tmTime);
+
+	ThmUnit.IsMorning = (tmTime.tm_hour <= 11 & tmTime.tm_min <= 59 & tmTime.tm_sec <= 59);
+
 	return TimeBuff;
 }
 
@@ -56,4 +61,20 @@ const char* myTime::getDate(void)
 	if(!getLocalTime(&tmDate)) Serial.println("Could not obtain date info");
 	sprintf(DateBuff, DateTxt, myDay[tmDate.tm_wday], tmDate.tm_mday, myMonth[tmDate.tm_mon], tmDate.tm_year+1900);
 	return DateBuff;
+}
+
+/** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void rebootAt(void)
+ * \brief	REBOOT dayly
+ * \note	reboot the unit at specified time
+ * \param	void
+ * \return	void
+ */
+void myTime::rebootAt(const char* hhmmss)
+{
+	if(!strcmp(hhmmss, ThmUnit.RebootAt))													//!< Reboot dayly at the specified time
+	{
+		Serial.printf("It's %s, time to REBOOT...\n", hhmmss);
+		ESP.restart();
+	}
 }

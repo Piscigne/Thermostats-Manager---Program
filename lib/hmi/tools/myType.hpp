@@ -67,6 +67,8 @@ typedef struct THm
 	char				LockPass[LOCK_CODE_LEN];		//!< To store the unlock password
 	char				RebootAt[REBOOT_TIME_LEN];		//!< To store the unlock password
 	THM_STATUS			Status		= STATUS_ERR;		//!< Program status used to light LED1 (rgb)
+	bool				IsMorning	= YES; 				//!< Flag for morning (00H00-11H59)
+	bool				EdfECOMode	= NO; 				//!< State of LED relais
 	bool				LedEscalier	= THM_LAMP_OFF; 	//!< State of LED relais
 	bool				Presence	= THM_ABSENCE;		//!< State of Presence
 	bool				Locked		= YES;				//!< TRUE if the select mode buttons are locked

@@ -94,10 +94,10 @@ void myTHMmode::sendMqtt(void)
  */
 void myTHMmode::dispSep(void)
 {
-	pTft->drawFastVLine(THM_BTN_ON,  Top, THM_SEP_HIGHT, TFT_DARKGREY);
-	pTft->drawFastVLine(THM_BTN_ECO, Top, THM_SEP_HIGHT, TFT_DARKGREY);
-	pTft->drawFastVLine(THM_BTN_HG,  Top, THM_SEP_HIGHT, TFT_DARKGREY);
-	pTft->drawFastVLine(THM_BTN_OFF, Top, THM_SEP_HIGHT, TFT_DARKGREY);
+	pTft->drawFastVLine(THM_BTN_CONF, Top, THM_SEP_HIGHT, TFT_DARKGREY);
+	pTft->drawFastVLine(THM_BTN_ON,   Top, THM_SEP_HIGHT, TFT_DARKGREY);
+	pTft->drawFastVLine(THM_BTN_ECO,  Top, THM_SEP_HIGHT, TFT_DARKGREY);
+	pTft->drawFastVLine(THM_BTN_HG,   Top, THM_SEP_HIGHT, TFT_DARKGREY);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------

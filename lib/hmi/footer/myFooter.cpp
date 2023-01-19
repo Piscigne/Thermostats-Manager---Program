@@ -107,7 +107,6 @@ void myFooter::dispTime(void)
 		pTft->setTextColor(TFT_LIGHTGREY, TFT_BLACK, true);
 		pTft->fillRect(FOOT_TXT_TIME_X, Top+FOOT_TXT_TIME_Y, FOOT_TXT_TIME_W, FOOT_TXT_TIME_H, TFT_BLACK);
 		pTft->drawString(Now, FOOT_TXT_TIME_C, Top+FOOT_TXT_TIME_Y, FOOT_TXT_TIME_F);
-		rebootAt(Now);																	//!< Call the dayly reboot function
 	}
 }
 
@@ -128,22 +127,6 @@ void myFooter::dispDate(void)
 		pTft->fillRect(FOOT_TXT_DATE_X, Top+FOOT_TXT_DATE_Y, FOOT_TXT_DATE_W, FOOT_TXT_DATE_H, TFT_BLACK);
 		pTft->drawString(pTime->getDate(), FOOT_TXT_DATE_C, Top+FOOT_TXT_DATE_Y, FOOT_TXT_DATE_F);
 		ThmUnit.Wifi.Rssi = pWifi->getRssi();											//!< Update the RSSI value each minutes
-	}
-}
-
-/** ---------------------------------------------------------------------------------------------------------------------
- * \fn		void rebootAt(void)
- * \brief	REBOOT dayly
- * \note	reboot the unit at specified time
- * \param	void
- * \return	void
- */
-void myFooter::rebootAt(const char* now)
-{
-	if(!strcmp(now, ThmUnit.RebootAt))													//!< Reboot dayly at the specified time
-	{
-		Serial.printf("It's %s, time to REBOOT...", now);
-		ESP.restart();
 	}
 }
 

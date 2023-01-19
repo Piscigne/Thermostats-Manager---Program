@@ -66,7 +66,6 @@ private:
 	void dispDate(void);
 	void homeTouch(void);
 	void lampTouch(void);
-	void rebootAt(const char* now);
 
 protected:
 	myBitmap*	pBmap;

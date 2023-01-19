@@ -19,6 +19,11 @@
 
 #define THM_MODE_SWITCH	100								//!< Y position of MODE buttons
 
+#define THM_TXT_EDF_X	8								//!< LABEL text coordinate and font definition
+#define THM_TXT_EDF_X2	236								//!< LABEL text coordinate and font definition
+#define THM_TXT_EDF_Y	1
+#define THM_TXT_EDF_F	1								//!< Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
+
 #define THM_TXT_LABEL_X	30								//!< LABEL text coordinate and font definition
 #define THM_TXT_LABEL_C	120
 #define THM_TXT_LABEL_Y	4
@@ -52,8 +57,6 @@
 
 #define THM_ICO_STATE_X	8								//!< STATE Icon coordinate definition
 #define THM_ICO_STATE_Y	30
-#define THM_ICO_STATE_W	50
-#define THM_ICO_STATE_H	46
 
 class myThm
 {
@@ -70,6 +73,7 @@ private:
 	void dispLabel(	void);
 	void dispTemp(	void);
 	void dispTarget(void);
+	void dispEdf(	void);
 	void dispMode(	void);
 	void dispModeIf(void);
 	void dispState(	void);
@@ -81,6 +85,7 @@ protected:
 	ICON_BOOL	IconState;								//!< To store the BITMAPs ON & OFF of icon HEATER STATE
 	int32_t		Top;									//!< To store the offset of Footer
 	THM_DATA	ThmActif;								//!< Memory of THERMOSTAT BUTTON data
+	bool		EdfActif;								//!< Memory of EDF mode Eco
 	int8_t		ThmSelected;							//!< Index of selected Button
 	const char*	TempTxt	= "%4.1f";						//!< String format to display TEMPERATURE
 	const char*	TargTxt	= "Consigne : %4.1f`C";			//!< String format to display TARGET TMP

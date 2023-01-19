@@ -96,6 +96,19 @@ void myMqtt::setTempExt(char* msg)
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void setTempEdf(char* msg)
+ * \brief	SET External Temperatures
+ * \note	SET the External Temperatures (Curent, Mawi and Mini)
+ * \param	[in] msg	 as char* - Received JSON message
+ * \return	void
+ */
+void myMqtt::setEdf(char* msg)
+{
+	deserializeJson(mqttJson, msg);
+	ThmUnit.EdfECOMode = bool(mqttJson[F("EcoMode")]);
+}
+
+/** ---------------------------------------------------------------------------------------------------------------------
  * \fn		void setPresence(char* msg)
  * \brief	SET Presence
  * \note	SET the Presence state
@@ -137,6 +150,7 @@ void myMqtt::Callback(char* topic, byte* payload, unsigned int length)
 
 	if(!strncmp(Topic, "THM",	   3))	setThm(	    Msg, (int)(Topic[3]-48));
 	if(!strncmp(Topic, "EXT",	   3))	setTempExt( Msg);
+	if(!strncmp(Topic, "EDF",	   3))	setEdf(		Msg);
 	if(!strncmp(Topic, "PRESENCE", 8))	setPresence(Msg);
 	if(!strncmp(Topic, "LEDS",	   4))	setLeds(	Msg);
 }

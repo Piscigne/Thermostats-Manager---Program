@@ -59,10 +59,10 @@ void myThm::init()
  */
 void myThm::dispLabel(void)
 {
-		pTft->setTextDatum(TXT_TOP_CENTER);
-		pTft->setTextColor(TFT_WHITE, TFT_BLACK, true);
-		pTft->drawString(ThmData[ThmUnit.Selected].Label, THM_TXT_LABEL_C, Top+THM_TXT_LABEL_Y, THM_TXT_LABEL_F);
-		strcpy(ThmActif.Label, ThmData[ThmUnit.Selected].Label);
+	pTft->setTextDatum(TXT_TOP_CENTER);
+	pTft->setTextColor(TFT_WHITE, TFT_BLACK, true);
+	pTft->drawString(ThmData[ThmUnit.Selected].Label, THM_TXT_LABEL_C, Top+THM_TXT_LABEL_Y, THM_TXT_LABEL_F);
+	strcpy(ThmActif.Label, ThmData[ThmUnit.Selected].Label);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
@@ -74,14 +74,14 @@ void myThm::dispLabel(void)
  */
 void myThm::dispTemp(void)
 {
-		char TxtBuff[THM_TXT_TEMP_B];
-		sprintf(TxtBuff, TempTxt, ThmData[ThmUnit.Selected].Temp);
-		pTft->setTextDatum(TXT_TOP_RIGHT);
-		pTft->setTextColor(TFT_GREEN, TFT_BLACK, true);
-		pTft->drawString(TxtBuff, THM_TXT_TEMP_C, Top+THM_TXT_TEMP_Y, THM_TXT_TEMP_F);
-		pTft->setTextDatum(TXT_TOP_LEFT);
-		pTft->drawString("`C", THM_TXT_TEMP_C+4, Top+THM_TXT_TEMP_Y, THM_TXT_TEMP_UF);
-		ThmActif.Temp = ThmData[ThmUnit.Selected].Temp;
+	char TxtBuff[THM_TXT_TEMP_B];
+	sprintf(TxtBuff, TempTxt, ThmData[ThmUnit.Selected].Temp);
+	pTft->setTextDatum(TXT_TOP_RIGHT);
+	pTft->setTextColor(TFT_GREEN, TFT_BLACK, true);
+	pTft->drawString(TxtBuff, THM_TXT_TEMP_C, Top+THM_TXT_TEMP_Y, THM_TXT_TEMP_F);
+	pTft->setTextDatum(TXT_TOP_LEFT);
+	pTft->drawString("`C", THM_TXT_TEMP_C+4, Top+THM_TXT_TEMP_Y, THM_TXT_TEMP_UF);
+	ThmActif.Temp = ThmData[ThmUnit.Selected].Temp;
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
@@ -93,12 +93,27 @@ void myThm::dispTemp(void)
  */
 void myThm::dispTarget(void)
 {
-		char TxtBuff[THM_TXT_TARG_B];
-		sprintf(TxtBuff, TargTxt, ThmData[ThmUnit.Selected].Target);
-		pTft->setTextDatum(TXT_TOP_RIGHT);
-		pTft->setTextColor(TFT_LIGHTGREY, TFT_BLACK, true);
-		pTft->drawString(TxtBuff, THM_TXT_TARG_L, Top+THM_TXT_TARG_Y, THM_TXT_TARG_F);
-		ThmActif.Target = ThmData[ThmUnit.Selected].Target;
+	char TxtBuff[THM_TXT_TARG_B];
+	sprintf(TxtBuff, TargTxt, ThmData[ThmUnit.Selected].Target);
+	pTft->setTextDatum(TXT_TOP_RIGHT);
+	pTft->setTextColor(TFT_LIGHTGREY, TFT_BLACK, true);
+	pTft->drawString(TxtBuff, THM_TXT_TARG_L, Top+THM_TXT_TARG_Y, THM_TXT_TARG_F);
+	ThmActif.Target = ThmData[ThmUnit.Selected].Target;
+}
+
+/** ---------------------------------------------------------------------------------------------------------------------
+* \fn		void dispEdf(void)
+ * \brief	EDF Mode
+ * \note	Display the EDF tarification mode
+ * \param	void
+ * \return	void
+ */
+void myThm::dispEdf(void)
+{
+	pTft->setTextDatum(TXT_TOP_LEFT);
+	pTft->setTextColor(ThmUnit.EdfECOMode ? TFT_DARKGREEN : TFT_BROWN, TFT_BLACK, true);
+	pTft->drawString(  ThmUnit.EdfECOMode ? F("H.C.") : F("H.P."), THM_TXT_EDF_X, Top+THM_TXT_EDF_Y, THM_TXT_EDF_F);
+	EdfActif = ThmUnit.EdfECOMode;
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
@@ -183,6 +198,7 @@ void myThm::redraw(void)
 {
 	pTft->fillRect(0, Top, 240, THM_MODE_SWITCH, TFT_BLACK);
 	dispLabel();
+	dispEdf();
 	dispTemp();
 	dispTarget();
 	dispState();
@@ -201,7 +217,8 @@ void myThm::redrawIf(void)
 	if( strcmp(ThmData[ThmUnit.Selected].Label, ThmActif.Label)	|
 		ThmData[ThmUnit.Selected].Temp	 != ThmActif.Temp		|
 		ThmData[ThmUnit.Selected].Target != ThmActif.Target		|
-		ThmData[ThmUnit.Selected].State	 != ThmActif.State)
+		ThmData[ThmUnit.Selected].State	 != ThmActif.State		|
+		ThmUnit.EdfECOMode				 != EdfActif)
 	{
 		redraw();
 	}
