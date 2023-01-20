@@ -10,7 +10,7 @@
 
 extern THM	  ThmUnit;																//!< Pointer to the UNIT data structure
 
-const char* myDay[]	  = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+const char* myDay[]	  = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
 const char* myMonth[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
 
 char TimeBuff[TXT_TIME_BUFFER];														//!< Buffer to store the formated string TIME

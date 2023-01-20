@@ -70,19 +70,22 @@ void myTHMmode::updateMode(void)
  */
 void myTHMmode::sendMqtt(void)
 {
-	char Topic[32];
-	sprintf(Topic, "Piscigne/THMS/MODE/THM%i", ThmUnit.Selected+1);
-
-	const char*	TxtMode;
-	switch(ThmData[ThmUnit.Selected].Mode)
+	if(ThmData[ThmUnit.Selected].Mode != MODE_VOID)						// Check and don't emit mode during the boot initialization
 	{
-		case MODE_CONF:	TxtMode = "CONF+";	break;
-		case MODE_ON:	TxtMode = "CONF";	break;
-		case MODE_ECO:	TxtMode = "ECO.";	break;
-		case MODE_HG:	TxtMode = "H.G.";	break;
-		default:		TxtMode = "ARRET";	break;
+		char Topic[32];
+		sprintf(Topic, "Piscigne/THMS/MODE/THM%i", ThmUnit.Selected+1);
+
+		const char*	TxtMode;
+		switch(ThmData[ThmUnit.Selected].Mode)
+		{
+			case MODE_CONF:	TxtMode = "CONF+";	break;
+			case MODE_ON:	TxtMode = "CONF";	break;
+			case MODE_ECO:	TxtMode = "ECO.";	break;
+			case MODE_HG:	TxtMode = "H.G.";	break;
+			default:		TxtMode = "ARRET";	break;
+		}
+		pMqtt->sendStr(Topic, TxtMode);
 	}
-	pMqtt->sendStr(Topic, TxtMode);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------

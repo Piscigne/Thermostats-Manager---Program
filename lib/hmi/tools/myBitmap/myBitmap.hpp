@@ -18,6 +18,8 @@
 #include "tools/myType.hpp"
 #include "tools/myDefine.hpp"
 
+unsigned short int myRGB(uint8_t r, uint8_t g, uint8_t b);
+
 class myBitmap
 {
 public:

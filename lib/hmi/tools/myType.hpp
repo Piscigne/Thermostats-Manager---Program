@@ -17,7 +17,7 @@
 typedef struct thmData
 {
 	char				Label[24];						//!< THERMOSTAT label name
-	THM_MODES			Mode		= MODE_OFF;			//!< THERMOSTAT mode (OFF, HG, ECO, CONF, CONF+)
+	THM_MODES			Mode		= MODE_VOID;		//!< THERMOSTAT mode (OFF, HG, ECO, CONF, CONF+)
 	float				Temp		= 88.8;				//!< THERMOSTAT temperature - measured
 	float				Target		= 88.8;				//!< THERMOSTAT temperature - target
 	bool				State		= ON;				//!< THERMOSTAT heater command (ON, OFF)

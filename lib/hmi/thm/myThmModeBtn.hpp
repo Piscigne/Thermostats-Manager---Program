@@ -20,11 +20,15 @@
 #define THM_SELECT_ON	true
 #define THM_SELECT_OFF	false
 
-#define BTN_BGND_WIDTH	48								//!< Background coordinate definition
-#define BTN_BGND_STEP	2
+#define BTN_BGND_WIDTH		48							//!< Background coordinate definition
+#define BTN_BGND_STEP		2
 
-#define BTN_ICO_MODE_X	14								//!< ICON coordinate definition
-#define BTN_ICO_MODE_Y	6
+#define BTN_TXT_TARGET_X	34							//!< Target coordinate definition
+#define BTN_TXT_TARGET_Y	1
+#define BTN_TXT_TARGET_F	1							//!< Font size 1=8p, 2=16p, 4=26p, 7=48p 7seg
+
+#define BTN_ICO_MODE_X		14							//!< ICON coordinate definition
+#define BTN_ICO_MODE_Y		7
 
 class myTHMmodeBtn
 {
@@ -39,6 +43,7 @@ public:
 private:
 	void dispMode(	void);
 	void dispBgnd(	void);
+	void dispTarget(void);
 	void dispSelect(void);
 
 protected:

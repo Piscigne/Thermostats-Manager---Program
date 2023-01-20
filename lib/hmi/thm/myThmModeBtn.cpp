@@ -19,6 +19,8 @@
 #include "resources/bitmap/thm/mode/icon/tempOFFoff.h"
 
 extern TFT_eSPI* pTft;																	//!< Pointer to the TFT screen class
+extern THM		 ThmUnit;																//!< Pointer to the UNIT data structure
+extern THM_DATA	 ThmData[THM_NBR];														//!< Pointer to the THERMOSTATS data array
 
 /** ---------------------------------------------------------------------------------------------------------------------
  * \fn		myTHMmodeBtn(int32_t x, int32_t y, THM_MODES mode)
@@ -98,6 +100,7 @@ void myTHMmodeBtn::setSelect(bool select)
 void myTHMmodeBtn::dispSelect(void)
 {
 	dispBgnd();
+	dispTarget();
 	dispMode();
 }
 
@@ -114,6 +117,24 @@ void myTHMmodeBtn::dispBgnd(void)
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------
+ * \fn		void dispTarget(void)
+ * \brief	DISPLAY the Target
+ * \note	Display the target value
+ * \param	void
+ * \return	void
+ */
+void myTHMmodeBtn::dispTarget(void)
+{
+	char TxtBuff[16];
+	if(Mode == MODE_OFF | Mode == MODE_VOID) sprintf(TxtBuff, "%s", "Off");
+	else				 					 sprintf(TxtBuff, "%3.1f", ThmData[ThmUnit.Selected].Targets[Mode]);
+	pTft->setTextDatum(TXT_TOP_RIGHT);
+	if(Select)	pTft->setTextColor(myRGB(232, 232, 232), myRGB(148, 148, 148), false);
+	else		pTft->setTextColor(myRGB( 64,  64,  64), myRGB(228, 228, 228), false);
+	pTft->drawString(TxtBuff, X+BTN_TXT_TARGET_X, Y+BTN_TXT_TARGET_Y, BTN_TXT_TARGET_F);
+}
+
+/** ---------------------------------------------------------------------------------------------------------------------
  * \fn		void dispMode(void)
  * \brief	DISPLAY the Button Icon
  * \note	Redraw the Buttons Icon
@@ -122,8 +143,8 @@ void myTHMmodeBtn::dispBgnd(void)
  */
 void myTHMmodeBtn::dispMode(void)
 {
-	if(Mode == THM_MODES::MODE_OFF)	pBmap->drawARRAYbutton(X+BTN_ICO_MODE_X, Y+BTN_ICO_MODE_Y, &IconOnOff, Select ? false : true);
-	else							pBmap->drawARRAYlist(  X+BTN_ICO_MODE_X, Y+BTN_ICO_MODE_Y, &IconMode,  (int8_t)Mode);
+	if(Mode == MODE_OFF)	pBmap->drawARRAYbutton(X+BTN_ICO_MODE_X, Y+BTN_ICO_MODE_Y, &IconOnOff, Select ? false : true);
+	else					pBmap->drawARRAYlist(  X+BTN_ICO_MODE_X, Y+BTN_ICO_MODE_Y, &IconMode,  (int8_t)Mode);
 }
 
 /** ---------------------------------------------------------------------------------------------------------------------

@@ -57,3 +57,11 @@ void myBitmap::drawARRAYlist(int32_t x, int32_t y, ICON_LIST* img, int8_t index)
 		pTft->pushImage(x, y, img->Icons[index]->width, img->Icons[index]->height, img->Icons[index]->data, TFT_BLACK);
 	}
 }
+
+unsigned short int myRGB(uint8_t r, uint8_t g, uint8_t b)
+{
+    unsigned short  B =  (b >> 3)        & 0x001F;
+    unsigned short  G = ((g >> 2) <<  5) & 0x07E0;
+    unsigned short  R = ((r >> 3) << 11) & 0xF800;
+    return (unsigned short int) (R | G | B);
+}
